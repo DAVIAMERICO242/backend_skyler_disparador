@@ -16,7 +16,7 @@ app.use(bodyParser.json({ limit: '200mb' }));
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 
 app.use(cors({
-    origin: `https://${process.env.SERVER_IP}:${process.env.FRONTEND_PORT}`,
+    origin: `https://${process.env.FRONTEND_IP}`,
     credentials: true
   }));
 
