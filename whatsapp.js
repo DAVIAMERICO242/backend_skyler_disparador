@@ -101,7 +101,7 @@ const getWhatsappContacts = async(connection_name, user_name)=>{
   };
 
   try{
-    const contacts = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/chat/findContacts/${server_connection_name}`, {
+    const contacts = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/chat/findContacts/${server_connection_name}`, {
       method: 'POST',
       headers: headers0
     });
@@ -148,7 +148,7 @@ const sendMessage = async(connection_name, user_name,target_phone,message, image
           "media": image_base64.split(',')[1]
         }
       }
-      const response = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/message/sendMedia/${server_connection_name}`, {
+      const response = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/message/sendMedia/${server_connection_name}`, {
         method: 'POST',
         headers: headers0,
         body: JSON.stringify(parameters)
@@ -164,7 +164,7 @@ const sendMessage = async(connection_name, user_name,target_phone,message, image
             "text": message
           }
         }
-        const response = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/message/sendText/${server_connection_name}`, {
+        const response = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/message/sendText/${server_connection_name}`, {
           method: 'POST',
           headers: headers0,
           body: JSON.stringify(parameters)
@@ -287,11 +287,11 @@ const WppDeleteConnection = async(connection_name, user_name)=>{
       };
 
     const server_connection_name = user_name?.toString() + '_' + (connection_name?.replace(/\s+/g, ' ')?.trim())?.toString();
-    await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/logout/${server_connection_name}`, {//deletar antes
+    await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/logout/${server_connection_name}`, {//deletar antes
         method: 'DELETE',
         headers: headers0
       });
-    const is_deleted_resp = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/delete/${server_connection_name}`, {
+    const is_deleted_resp = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/delete/${server_connection_name}`, {
         method: 'DELETE',
         headers: headers0
       });
@@ -311,7 +311,7 @@ const isWppConnected = async(connection_name, user_name)=>{
       };
 
     const server_connection_name = user_name?.toString() + '_' + (connection_name?.replace(/\s+/g, ' ')?.trim())?.toString();
-    const is_connected_resp = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/connectionState/${server_connection_name}`, {
+    const is_connected_resp = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/connectionState/${server_connection_name}`, {
         method: 'GET',
         headers: headers0
       });
@@ -334,7 +334,7 @@ const genQRCode = async (user_name, connection_name) => {
             'apikey': `${process.env.WPPAPI_KEY}`,
             'Content-Type': 'application/json'
           };
-        const instances_response = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/fetchInstances`, {
+        const instances_response = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/fetchInstances`, {
             method: 'GET',
             headers: headers0
           });
@@ -348,7 +348,7 @@ const genQRCode = async (user_name, connection_name) => {
         instances.map(async (element,index)=>{
             if(element.instance?.status!='open'){
                 console.log('IF ATENDIDO')
-                await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/delete/${element.instance.instanceName}`, {
+                await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/delete/${element.instance.instanceName}`, {
                     method: 'DELETE',
                     headers: headers0
                 });
@@ -375,7 +375,7 @@ const genQRCode = async (user_name, connection_name) => {
     };
   
     try {
-      const response = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/create`, {
+      const response = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/create`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(data),
@@ -403,7 +403,7 @@ const genQRCode = async (user_name, connection_name) => {
         'apikey': `${process.env.WPPAPI_KEY}`,
         'Content-Type': 'application/json'
       };
-    const response_connections = await fetch(`http://localhost:${process.env.WPPAPI_PORT}/instance/fetchInstances`, {
+    const response_connections = await fetch(`http://${process.env.SEVER_IP}:${process.env.WPPAPI_PORT}/instance/fetchInstances`, {
         method: 'GET',
         headers: headers
       });
